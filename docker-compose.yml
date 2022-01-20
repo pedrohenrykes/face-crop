@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  app:
+    image: node:16.13.2
+    container_name: image-crop
+    working_dir: /src
+    command: bash -c "npm i && npm start"
+    volumes:
+      - ./:/src
+    ports:
+      - 3030:3000
