@@ -1,4 +1,4 @@
-// require('@tensorflow/tfjs-node');
+require('@tensorflow/tfjs-node');
 const faceapi = require('@vladmandic/face-api');
 const { Canvas, Image, ImageData, loadImage } = require('canvas');
 
