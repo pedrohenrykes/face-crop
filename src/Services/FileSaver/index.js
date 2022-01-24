@@ -1,13 +1,14 @@
 const fs = require('fs');
+const { resolve } = require('path');
 const { v4: uuid } = require('uuid');
 
-class SaveFile {
+class FileSaver {
 
-    store(path, buffer, options = {}) {
+    async store(path, buffer, options = {}) {
 
         const id        = options?.id ?? uuid();
         const name      = options?.name ?? '';
-        const extension = options?.extension ?? 'jpg';
+        const extension = options?.extension ?? '';
 
         try {
 
@@ -19,7 +20,7 @@ class SaveFile {
 
             fs.writeFileSync(file, buffer);
 
-            return id;
+            return { id, file: resolve(file) };
 
         } catch (e) {
 
@@ -30,4 +31,4 @@ class SaveFile {
     }
 }
 
-module.exports = SaveFile;
+module.exports = FileSaver;

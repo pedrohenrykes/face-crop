@@ -1,5 +1,5 @@
-const ImageCrop = require('../Services/ImageCrop');
-const SaveFile = require('../Services/SaveFile');
+const PhotoCropper = require('../Services/PhotoCropper');
+const FileSaver = require('../Services/FileSaver');
 
 class UploadController {
 
@@ -11,17 +11,20 @@ class UploadController {
 
         try {
 
-            const { image : file } = req.files;
+            const { file } = req.files;
+            const { extension } = req.body;
 
             if (!file || Object.keys(req.files).length === 0) {
-                throw new Error('No files uploaded.');
+                throw new Error('No file uploaded.');
             }
 
-            const fileId = await (new SaveFile).store(this.savePath, file.data);
+            const { id } = await (new FileSaver).store(this.savePath, file.data, { extension });
 
-            (new ImageCrop).crop(file, fileId);
+            const images = await (new PhotoCropper).crop(file, id, extension);
 
-            return res.status(200).send('Upload successfully!');
+            const { file : cropped } = images[0];
+
+            return res.status(200).sendFile(cropped);
 
         } catch (e) {
 
