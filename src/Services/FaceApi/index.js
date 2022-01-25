@@ -22,6 +22,13 @@ class FaceApi {
             const image = await loadImage(file.data);
             const detections = await faceapi.detectAllFaces(image, this.options);
 
+            detections.map((detection) => {
+                detection._box._x -= 25;
+                detection._box._y -= 75;
+                detection._box._width += 50;
+                detection._box._height += 100;
+            })
+
             return await faceapi.extractFaces(image, detections);
 
         } catch (e) {
