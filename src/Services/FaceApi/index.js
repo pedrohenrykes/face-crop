@@ -27,7 +27,7 @@ class FaceApi {
                 detection._box._y -= 75;
                 detection._box._width += 50;
                 detection._box._height += 100;
-            })
+            });
 
             return await faceapi.extractFaces(image, detections);
 
