@@ -4,11 +4,10 @@ const express = require('express');
 const parser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
-
 const port = process.env.SERVER_PORT;
 const app = express();
 
-const UploadController = require('./src/Controllers/UploadController');
+const routes = require('./routes');
 
 // allow the use "Cross-Origin Resource Sharing"
 app.use(cors());
@@ -23,6 +22,7 @@ app.use(parser.json());
 app.use(fileUpload());
 
 app.get('/', (req, res) => res.send("I'm working, bitch!"));
-app.post('/upload', (req, res) => (new UploadController).upload(req, res));
+
+routes.map((route) => app.use(route));
 
 app.listen(port, () => console.log(`Server running and listen on port ${port}`));

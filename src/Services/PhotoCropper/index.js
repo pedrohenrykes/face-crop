@@ -12,7 +12,7 @@ class PhotoCropper {
 
         try {
 
-            const extracted = await (new FaceApi).process(file);
+            const extracted = await new FaceApi().process(file);
 
             if (extracted.length === 0) {
                 throw new Error('No faces detected.');
@@ -21,7 +21,7 @@ class PhotoCropper {
             let images = [];
 
             for (const key in extracted) {
-                images.push(await (new FileSaver).store(this.savePath, extracted[key].toBuffer('image/jpeg'), {
+                images.push(await new FileSaver().store(this.savePath, extracted[key].toBuffer('image/jpeg'), {
                     id,
                     name: `_${key}`,
                     extension

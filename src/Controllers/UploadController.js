@@ -18,9 +18,9 @@ class UploadController {
                 throw new Error('No file uploaded.');
             }
 
-            const { id } = await (new FileSaver).store(this.savePath, file.data, { extension });
+            const { id } = await new FileSaver().store(this.savePath, file.data, { extension });
 
-            const images = await (new PhotoCropper).crop(file, id, extension);
+            const images = await new PhotoCropper().crop(file, id, extension);
 
             const { file : cropped } = images[0];
 
